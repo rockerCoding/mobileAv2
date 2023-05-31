@@ -13,47 +13,36 @@ const Gerenciar = () => {
   setTimeout(() => {
     setDataShow(data)
   }, 100);
-  
-  useEffect(() => {
-    console.log(dataShow)
-  }, [dataShow])
-  
 
   return (
     <View style={{flex: 1}}>
-      {/* <FlatList 
-        data={data}
-        extraData={selected}
-        renderItem={({item}) => <Pressable onPress={() => setSelected(item)}><Text>{item.id}</Text></Pressable>}
-      /> */}
     <Tabela 
         data={dataShow} 
         title="Lista de Leitores cadastrados" 
         stick={true}
         configColumns={[
           {
-            size: "15%",
+            name: "id",
+            size: "10%",
             type: "numeric"
           }, 
           {
+            name: "nome",
             size: "40%",
             type: "text"
           },
           {
-            size: "40%",
+            name: "email",
+            size: "39%",
             type: "text",
           },
           {
+            name: "cpf",
             size: "40%",
             type: "text"
           }
         ]}
-        columnSizes={{
-          id: '10%',
-          nome: '40%',
-          cpf: '40%',
-          email: '40%'
-        }}
+       
         zebra={true}
         menus={{
           details: {
@@ -65,7 +54,7 @@ const Gerenciar = () => {
             action: "deleteUser()"
           }
         }}
-        selected={setSelected}
+        
         
       /> 
       

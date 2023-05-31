@@ -6,20 +6,28 @@ export const TabelaContext = createContext({});
 const TabelaProvider = ({ children }) => {
 
   const [dataShow, setDataShow] = useState()
-  const [selected, setSelected] = useState(null)
-
-  /* useEffect(() => {
-  
-
-  }, [dataShow]) */
+  const [selectedId, setSelectedId] = useState(null)
+  const [keys, setKeys] = useState(null)
+  const [sizes, setSizes] = useState(null)
+  const [totalSize, setTotalSize] = useState(null)
+  const [oldData, setOldData] = useState(null)
+  const [types, setTypes] = useState(null)
+  const [names, setNames] = useState(null)
 
   return (
-    <TabelaContext.Provider 
+    <TabelaContext.Provider
       value={{
-        selected, setSelected
+        selectedId, setSelectedId,
+        keys, setKeys,
+        sizes, setSizes,
+        totalSize, setTotalSize,
+        oldData, setOldData,
+        types, setTypes, 
+        names, setNames
+        
       }}
-      
-      >
+
+    >
       {children}
     </TabelaContext.Provider>
   )
