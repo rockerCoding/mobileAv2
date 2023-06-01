@@ -13,6 +13,7 @@ const TabelaProvider = ({ children }) => {
   const [oldData, setOldData] = useState(null)
   const [types, setTypes] = useState(null)
   const [names, setNames] = useState(null)
+  const [orderBy, setOrderBy] = useState(null)
 
   return (
     <TabelaContext.Provider
@@ -23,7 +24,8 @@ const TabelaProvider = ({ children }) => {
         totalSize, setTotalSize,
         oldData, setOldData,
         types, setTypes, 
-        names, setNames
+        names, setNames,
+        orderBy, setOrderBy
         
       }}
 

@@ -3,12 +3,13 @@ import { Dimensions, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, Toucha
 import TabelaProvider, { TabelaContext } from "./context/TabelaContext";
 import Tabela from './Tabela'
 
-const TabelaHome = ({ data, title, stick, configColumns }) => {
+const TabelaHome = ({ data, title, stick, configColumns, setVariable }) => {
+
   return (
     <TabelaProvider>
       <Tabela
-        data={data} title={title} stick={true} configColumns={configColumns}
-
+        data={data} title={title} stick={true} configColumns={configColumns} 
+        setVariable={setVariable}
       />
     </TabelaProvider>
   )

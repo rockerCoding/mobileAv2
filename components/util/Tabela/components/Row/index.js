@@ -2,14 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { styles } from './styles'
 import { TabelaContext } from "../../context/TabelaContext";
+import { useNavigation } from "@react-navigation/native";
 
 const Row = ({ item, onPress, style, configColumns }) => {
+
+  const navigation = useNavigation()
 
   const { selectedId, setSelectedId, keys, setKeys, sizes, setSizes, totalSize, setTotalSize, types, setTypes, names, setNames } = useContext(TabelaContext)
   const [background, setBackground] = useState(null)
 
   useEffect(() => {
+    
     setBackground(item.id === selectedId?.id ? "lightblue" : "white")
+    if(selectedId) {
+      navigation.navigate("Detalhes")
+      setSelectedId(null)
+    }
   }, [selectedId])
 
   const TD = ({item, config}) => {
@@ -22,7 +30,6 @@ const Row = ({ item, onPress, style, configColumns }) => {
     )
   }
 
-  
 
   return (
     <TouchableOpacity 

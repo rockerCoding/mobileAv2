@@ -5,14 +5,29 @@ import TabelaProvider, { TabelaContext } from "./context/TabelaContext";
 import Header from "./components/Header";
 import Row from "./components/Row";
 
-const calculateSizes = (keys, configColumns) => {
+const calculateSizes = (keys, configColumns, data) => {
   let sizes = []
   let total = 0
 
   configColumns.map((config) => {
-    let part = config["size"].split("%")[0] / 100
-    sizes.push(Dimensions.get("screen").width * part)
-    total += Dimensions.get("screen").width * part
+    let part = null
+    if(config["size"] == "fit"){
+      let chars = 0;
+      data.map((item) => {
+        chars = item[config["name"]].length > chars ? item[config["name"]].length : chars
+      })
+
+      if(chars == 0) chars = config["name"].length + 2
+
+      part = chars * 9
+      sizes.push(part)
+      total += part
+    } else {
+      console.log('n fit')
+      part = config["size"].split("%")[0] / 100
+      sizes.push(Dimensions.get("screen").width * part)
+      total += Dimensions.get("screen").width * part
+    }
   })
 
   return [sizes, total]
@@ -22,7 +37,7 @@ var keys = null
 
 const initalConfig = (data, configColumns) => {
   let keys = Object.keys(data[0])
-  let [sizes, totalSize] = calculateSizes(keys, configColumns)
+  let [sizes, totalSize] = calculateSizes(keys, configColumns, data)
   let types = configColumns.map((item) => {
     return item["type"]
   })
@@ -36,12 +51,17 @@ const initalConfig = (data, configColumns) => {
 
 }
 
-const Tabela = ({ data, title, stick, configColumns }) => {
+const Tabela = ({ data, title, stick, configColumns, setVariable }) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [isStickyHeader, setIsStickyHeader] = useState(stick ? 0 : -1);
 
   const { selectedId, setSelectedId, keys, setKeys, sizes, setSizes, totalSize, setTotalSize, oldData, setOldData, types, setTypes , names, setNames} = useContext(TabelaContext)
+
+  useEffect(() => {
+    setVariable(selectedId)
+  }, [selectedId])
+  
 
   useEffect(() => {
     if (data) {
@@ -59,7 +79,7 @@ const Tabela = ({ data, title, stick, configColumns }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <Row item={item} configColumns={configColumns}/>
+      <Row item={item} configColumns={configColumns} setVariable={setVariable}/>
     );
   };
 
