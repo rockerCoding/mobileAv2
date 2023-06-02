@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   headerText: {
     textAlign: 'center',
-    fontWeight: 600,
+    fontWeight: '600',
     flex: 1
     
   },

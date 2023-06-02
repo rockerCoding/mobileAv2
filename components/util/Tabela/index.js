@@ -8,7 +8,10 @@ const TabelaHome = ({ data, title, stick, configColumns, setVariable }) => {
   return (
     <TabelaProvider>
       <Tabela
-        data={data} title={title} stick={true} configColumns={configColumns} 
+        data={data} 
+        title={title} 
+        stick={true} 
+        configColumns={configColumns} 
         setVariable={setVariable}
       />
     </TabelaProvider>

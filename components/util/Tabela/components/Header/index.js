@@ -22,7 +22,7 @@ const Header = () => {
             <Pressable
               style={[{ width: sizes[index] }, styles.headerTextContainer]}
               key={index}
-              onPress={() => console.log(item)}
+              /* onPress={() => console.log(item)} */
               
               >
               <Text style={styles.headerText}>{item.toUpperCase()}</Text>

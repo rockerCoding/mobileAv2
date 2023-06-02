@@ -4,15 +4,16 @@ import { useNavigation } from '@react-navigation/native';
 import { DataTable } from 'react-native-paper';
 import data from '../data';
 import Tabela from '../../../../util/Tabela'
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import Detalhes from "../Detalhes";
+import TabelaNew from "../../../../util/Tabela/TabelaNew";
 
 const Stack = createStackNavigator();
 
-
-const TabelaOriginal = ({ dataShow, setVariable }) => {
+const TabelaOriginal = ({ dataShow, setVariable, selected }) => {
   return (
     <View style={{ flex: 1 }}>
+      <Text style={{marginLeft: 50}}>{selected?.id}</Text>
       <Tabela
         setVariable={setVariable}
         data={dataShow}
@@ -21,7 +22,7 @@ const TabelaOriginal = ({ dataShow, setVariable }) => {
         configColumns={[
           {
             name: "id",
-            size: "fit",
+            size: "15%",
             type: "numeric"
           },
           {
@@ -52,35 +53,74 @@ const TabelaOriginal = ({ dataShow, setVariable }) => {
             action: "deleteUser()"
           }
         }}
-
-
       />
-
     </View>
   )
 }
 
 const Gerenciar = () => {
 
-  const [selected, setSelected] = React.useState(null)
+  const [selected, setSelected] = useState(null)
   const [dataShow, setDataShow] = useState(null)
+
+  const navigation = useNavigation()
 
   setTimeout(() => {
     setDataShow(data)
-  }, 100);  
+  }, 2000);
+
+  useEffect(() => {
+    if(selected) navigation.navigate("Detalhes")
+  }, [selected])
+  
 
   return (
     <Stack.Navigator
-      initialRouteName="Tabelas"
+      initialRouteName="TabelaNew"
       screenOptions={{
-        headerShown: false
+      
+        headerShown: false,
+        animationEnabled: true,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
       }}>
-      <Stack.Screen name="Tabelas">
-        {props => (<TabelaOriginal dataShow={dataShow} variable={selected} setVariable={setSelected}/>)}
+
+      {/* <Stack.Screen name="Tabelas">
+        {props => (<TabelaOriginal dataShow={dataShow} variable={selected} setVariable={setSelected} selected={selected}/>)}
+      </Stack.Screen> */}
+      <Stack.Screen name="TabelaNew">
+        {props => (
+          <TabelaNew 
+            data={dataShow} 
+            setSelected={setSelected} 
+            selected={selected}
+            configColumns={[
+              {
+                name: "id",
+                size: "15%",
+                type: "numeric"
+              },
+              {
+                name: "nome",
+                size: "40%",
+                type: "text"
+              },
+              {
+                name: "email",
+                size: "40%",
+                type: "text",
+              },
+              {
+                name: "cpf",
+                size: "40%",
+                type: "text"
+              }
+            ]}
+          />
+        )}
       </Stack.Screen>
       <Stack.Screen name="Detalhes">
-        {props => <Detalhes selected={selected} setSelected={setSelected}/>}
-      </Stack.Screen> 
+        {props => <Detalhes selected={selected} setSelected={setSelected} />}
+      </Stack.Screen>
     </Stack.Navigator>
 
   );

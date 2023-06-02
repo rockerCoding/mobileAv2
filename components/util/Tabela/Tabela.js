@@ -23,7 +23,6 @@ const calculateSizes = (keys, configColumns, data) => {
       sizes.push(part)
       total += part
     } else {
-      console.log('n fit')
       part = config["size"].split("%")[0] / 100
       sizes.push(Dimensions.get("screen").width * part)
       total += Dimensions.get("screen").width * part
@@ -79,7 +78,7 @@ const Tabela = ({ data, title, stick, configColumns, setVariable }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <Row item={item} configColumns={configColumns} setVariable={setVariable}/>
+      <Row item={item} configColumns={configColumns} setVariable={setVariable} />
     );
   };
 
@@ -90,7 +89,7 @@ const Tabela = ({ data, title, stick, configColumns, setVariable }) => {
 
     <SafeAreaView style={[styles.container, {flex: 1}]}>
       <View style={styles.topContainer}>
-        <Text>{title} - {selectedId?.id}</Text>
+        <Text>{title}</Text>
       </View>
       <ScrollView horizontal>
         {

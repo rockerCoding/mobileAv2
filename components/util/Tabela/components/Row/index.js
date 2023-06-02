@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Dimensions, FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, FlatList, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { styles } from './styles'
 import { TabelaContext } from "../../context/TabelaContext";
 import { useNavigation } from "@react-navigation/native";
@@ -10,15 +10,17 @@ const Row = ({ item, onPress, style, configColumns }) => {
 
   const { selectedId, setSelectedId, keys, setKeys, sizes, setSizes, totalSize, setTotalSize, types, setTypes, names, setNames } = useContext(TabelaContext)
   const [background, setBackground] = useState(null)
+  const [abc, setAbc] = useState(null)
 
-  useEffect(() => {
-    
-    setBackground(item.id === selectedId?.id ? "lightblue" : "white")
-    if(selectedId) {
+  /* useEffect(() => {
+    console.log('clicou')
+    navigation.navigate("Detalhes")
+    setBackground(item.id === selectedId?.id ? "lightblue" : "white") 
+    if(selectedId != null) {
       navigation.navigate("Detalhes")
-      setSelectedId(null)
+      //setSelectedId(null)
     }
-  }, [selectedId])
+  }, [selectedId]) */
 
   const TD = ({item, config}) => {
     const align = config["types"] == "numeric" ? "right" : "center"
@@ -30,10 +32,14 @@ const Row = ({ item, onPress, style, configColumns }) => {
     )
   }
 
+  const handleSelected = (item) => {
+    setSelectedId(item)
+    navigation.navigate("Detalhes")
+  }
 
   return (
-    <TouchableOpacity 
-      onPress={() => setSelectedId(item)} 
+    <Pressable 
+      onPress={() => handleSelected(item)}
       style={[styles.row, { backgroundColor: background, width: totalSize, paddingVertical: 10}]}>
 
       {
@@ -47,7 +53,7 @@ const Row = ({ item, onPress, style, configColumns }) => {
           )
         })
       }
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
