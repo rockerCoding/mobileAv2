@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const TabelaOriginal = ({ dataShow, setVariable, selected }) => {
   return (
     <View style={{ flex: 1 }}>
-      <Text style={{marginLeft: 50}}>{selected?.id}</Text>
+      <Text style={{ marginLeft: 50 }}>{selected?.id}</Text>
       <Tabela
         setVariable={setVariable}
         data={dataShow}
@@ -67,61 +67,71 @@ const Gerenciar = () => {
 
   setTimeout(() => {
     setDataShow(data)
-  }, 2000);
+  }, 100);
 
   useEffect(() => {
-    if(selected) navigation.navigate("Detalhes")
+    if (selected) navigation.navigate("Detalhes")
   }, [selected])
-  
+
 
   return (
-    <Stack.Navigator
-      initialRouteName="TabelaNew"
-      screenOptions={{
-      
-        headerShown: false,
-        animationEnabled: true,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-      }}>
+    <View style={{flex: 1}}>
+      {/* <Text>Teste</Text>
+      <Text>{selected?.id}</Text> */}
+      <Stack.Navigator
+        
+        initialRouteName="TabelaNew"
+        screenOptions={{
+          headerShown: false,
+          animationEnabled: true,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+        }}>
+        <Stack.Screen name="TabelaNew">
+          {props => (
+            <TabelaNew
+              title="Lista de leitores"
+              zebra={true}
+              data={dataShow}
+              setSelected={setSelected}
+              selected={selected}
+              configTable={{
+                headerColor: 'blue',
+                headerColorText: 'whitesmoke',
+                zebraColors: ["lightblue", "yellow"],
 
-      {/* <Stack.Screen name="Tabelas">
-        {props => (<TabelaOriginal dataShow={dataShow} variable={selected} setVariable={setSelected} selected={selected}/>)}
-      </Stack.Screen> */}
-      <Stack.Screen name="TabelaNew">
-        {props => (
-          <TabelaNew 
-            data={dataShow} 
-            setSelected={setSelected} 
-            selected={selected}
-            configColumns={[
-              {
-                name: "id",
-                size: "15%",
-                type: "numeric"
-              },
-              {
-                name: "nome",
-                size: "40%",
-                type: "text"
-              },
-              {
-                name: "email",
-                size: "40%",
-                type: "text",
-              },
-              {
-                name: "cpf",
-                size: "40%",
-                type: "text"
-              }
-            ]}
-          />
-        )}
-      </Stack.Screen>
-      <Stack.Screen name="Detalhes">
-        {props => <Detalhes selected={selected} setSelected={setSelected} />}
-      </Stack.Screen>
-    </Stack.Navigator>
+              }}
+              configColumns={[
+                {
+                  name: "id",
+                  size: "15%",
+                  type: "numeric"
+                },
+                {
+                  name: "nome",
+                  size: "40%",
+                  type: "text"
+                },
+                {
+                  name: "email",
+                  size: "40%",
+                  type: "text",
+                },
+                {
+                  name: "cpf",
+                  size: "40%",
+                  type: "text"
+                }
+              ]}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Detalhes">
+          {props => <Detalhes selected={selected} setSelected={setSelected} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </View>
+
+
 
   );
 };

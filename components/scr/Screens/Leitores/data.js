@@ -3,7 +3,7 @@ let data = [
       "id": 1,
       "nome": "Branch Hopkins",
       "cpf": "374857504-86",
-      "email": "branchhopkins@egypto.comaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      "email": "branchhopkins@egypto.com"
   },
   {
       "id": 2,
