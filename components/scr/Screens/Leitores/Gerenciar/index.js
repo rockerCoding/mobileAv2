@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Pressable, View, Text, Button, FlatList } from 'react-native';
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Pressable, View, Text, Button, FlatList, SafeAreaView, Modal, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DataTable } from 'react-native-paper';
 import data from '../data';
@@ -7,6 +7,7 @@ import Tabela from '../../../../util/Tabela'
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import Detalhes from "../Detalhes";
 import TabelaNew from "../../../../util/Tabela/TabelaNew";
+import TesteTabela from "../../../../util/TesteTabela";
 
 const Stack = createStackNavigator();
 
@@ -63,77 +64,140 @@ const Gerenciar = () => {
   const [selected, setSelected] = useState(null)
   const [dataShow, setDataShow] = useState(null)
 
-  const navigation = useNavigation()
-
   setTimeout(() => {
     setDataShow(data)
-  }, 100);
+  }, 200);
 
   useEffect(() => {
-    if (selected) navigation.navigate("Detalhes")
+    console.log(selected)
   }, [selected])
 
-
   return (
-    <View style={{flex: 1}}>
-      {/* <Text>Teste</Text>
-      <Text>{selected?.id}</Text> */}
-      <Stack.Navigator
-        
-        initialRouteName="TabelaNew"
-        screenOptions={{
-          headerShown: false,
-          animationEnabled: true,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-        }}>
-        <Stack.Screen name="TabelaNew">
-          {props => (
-            <TabelaNew
-              title="Lista de leitores"
-              zebra={true}
-              data={dataShow}
-              setSelected={setSelected}
-              selected={selected}
-              configTable={{
-                headerColor: 'blue',
-                headerColorText: 'whitesmoke',
-                zebraColors: ["lightblue", "yellow"],
+    <SafeAreaView style={{ flex: 1 }}>
+      <TesteTabela
+        data={dataShow}
+        title="Lista de leitores"
+        zebra={true}
+        setSelected={setSelected}
+        selected={selected}
+        configTable={{
+          headerColor: 'blue',
+          headerColorText: 'whitesmoke',
+          zebraColors: ["lightblue", "yellow"],
 
-              }}
-              configColumns={[
-                {
-                  name: "id",
-                  size: "15%",
-                  type: "numeric"
-                },
-                {
-                  name: "nome",
-                  size: "40%",
-                  type: "text"
-                },
-                {
-                  name: "email",
-                  size: "40%",
-                  type: "text",
-                },
-                {
-                  name: "cpf",
-                  size: "40%",
-                  type: "text"
-                }
-              ]}
-            />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="Detalhes">
-          {props => <Detalhes selected={selected} setSelected={setSelected} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </View>
+        }}
+        configColumns={[
+          {
+            name: "id",
+            size: "15%",
+            type: "numeric"
+          },
+          {
+            name: "nome",
+            size: "40%",
+            type: "text"
+          },
+          {
+            name: "email",
+            size: "40%",
+            type: "text",
+          },
+          {
+            name: "cpf",
+            size: "40%",
+            type: "text"
+          }]}
+      />
+      <Modal
+        animationType={'fade'}
+        transparent={false}
+        visible={selected ? true : false}
+        onRequestClose={() => {
+          console.log('Modal has been closed.');
+        }}>
+        {/*All views of Modal*/}
+        {/*Animation can be slide, slide, none*/}
+        <View style={styles.modal}>
+          <Text style={styles.text}>Modal is open!</Text>
+          <Button
+            title="Click To Close Modal"
+            onPress={() => {
+              setSelected(null)
+            }}
+          />
+        </View>
+      </Modal>
+      {/* <View style={styles.container}>
+
+        
+        <Button
+          title="Click To Open Modal"
+          onPress={() => {
+            setShowModal(!showModal);
+          }}
+        />
+      </View> */}
+      {/* <TabelaNew
+        title="Lista de leitores"
+        zebra={true}
+        data={dataShow}
+        setSelected={setSelected}
+        selected={selected}
+        configTable={{
+          headerColor: 'blue',
+          headerColorText: 'whitesmoke',
+          zebraColors: ["lightblue", "yellow"],
+
+        }}
+        configColumns={[
+          {
+            name: "id",
+            size: "15%",
+            type: "numeric"
+          },
+          {
+            name: "nome",
+            size: "40%",
+            type: "text"
+          },
+          {
+            name: "email",
+            size: "40%",
+            type: "text",
+          },
+          {
+            name: "cpf",
+            size: "40%",
+            type: "text"
+          }
+        ]}
+      /> */}
+    </SafeAreaView>
 
 
 
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    marginTop: 30,
+  },
+  modal: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#00ff00',
+    padding: 100,
+  },
+  text: {
+    color: '#3f2949',
+    marginTop: 10,
+  },
+});
+
 
 export default Gerenciar;

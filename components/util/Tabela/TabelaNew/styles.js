@@ -1,5 +1,8 @@
 import { Dimensions, StyleSheet } from "react-native";
 
+const HEIGHT = Dimensions.get("screen").height
+const WIDTH = Dimensions.get("screen").width
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -13,8 +16,9 @@ export const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: Dimensions.get("screen").height * 0.03,
-    width: Dimensions.get("screen").width
+    
+    height: HEIGHT * 0.075,
+    width: WIDTH
   },
 
   // title
@@ -32,6 +36,7 @@ export const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     paddingVertical: Dimensions.get("screen").height * 0.02,
+    zIndex: 10
   },
   headerCellsContainer: {
     borderRightColor: 'grey',
