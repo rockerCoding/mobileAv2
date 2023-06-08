@@ -1,13 +1,11 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Pressable, View, Text, Button, FlatList, SafeAreaView, Modal, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { DataTable } from 'react-native-paper';
+import { Pressable, View, Text, Button, FlatList, SafeAreaView, /* Modal, */ StyleSheet } from 'react-native';
 import data from '../data';
 import Tabela from '../../../../util/Tabela'
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import Detalhes from "../Detalhes";
-import TabelaNew from "../../../../util/Tabela/TabelaNew";
 import TesteTabela from "../../../../util/TesteTabela";
+import Modal from "react-native-modal";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 
@@ -73,7 +71,7 @@ const Gerenciar = () => {
   }, [selected])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, padding: 10 }}>
       <TesteTabela
         data={dataShow}
         title="Lista de leitores"
@@ -81,9 +79,11 @@ const Gerenciar = () => {
         setSelected={setSelected}
         selected={selected}
         configTable={{
+          titleColor: 'blue',
+          titleTextColor: 'whitesmoke',
           headerColor: 'blue',
           headerColorText: 'whitesmoke',
-          zebraColors: ["lightblue", "yellow"],
+          zebraColors: ["lightcyan", "white"],
 
         }}
         configColumns={[
@@ -109,34 +109,32 @@ const Gerenciar = () => {
           }]}
       />
       <Modal
-        animationType={'fade'}
-        transparent={false}
-        visible={selected ? true : false}
-        onRequestClose={() => {
-          console.log('Modal has been closed.');
-        }}>
-        {/*All views of Modal*/}
-        {/*Animation can be slide, slide, none*/}
-        <View style={styles.modal}>
-          <Text style={styles.text}>Modal is open!</Text>
-          <Button
-            title="Click To Close Modal"
-            onPress={() => {
-              setSelected(null)
-            }}
-          />
+        isVisible={selected ? true : false}
+        backdropColor={'rgba(1,1,1,0.2)'}
+        backdropOpacity={1}
+        animationIn={'zoomInDown'}
+        animationOut={'zoomOutUp'}
+        animationInTiming={1000}
+        animationOutTiming={1000}
+        backdropTransitionInTiming={1000}
+        backdropTransitionOutTiming={1000}
+
+      >
+        <View style={{ flex: 1, backgroundColor: 'white', padding: 20 }}>
+          <View style={{ flex: 1, backgroundColor: 'whitesmoke', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+            <TouchableOpacity onPress={() => setSelected(null)} style={{position: 'absolute', left: 0}}>
+              Voltar
+            </TouchableOpacity>
+            
+          </View>
+          <View style={{ flex: 4 }}>
+
+
+
+          </View>
         </View>
       </Modal>
-      {/* <View style={styles.container}>
 
-        
-        <Button
-          title="Click To Open Modal"
-          onPress={() => {
-            setShowModal(!showModal);
-          }}
-        />
-      </View> */}
       {/* <TabelaNew
         title="Lista de leitores"
         zebra={true}
@@ -184,14 +182,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    backgroundColor: 'rgba(1,1,1,0.1)',
     marginTop: 30,
   },
   modal: {
     flex: 1,
+    margin: 50,
     alignItems: 'center',
     backgroundColor: '#00ff00',
     padding: 100,
+
   },
   text: {
     color: '#3f2949',
