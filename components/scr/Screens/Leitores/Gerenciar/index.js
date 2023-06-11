@@ -6,6 +6,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import TesteTabela from "../../../../util/TesteTabela";
 import Modal from "react-native-modal";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Detalhes from "../Detalhes";
 
 const Stack = createStackNavigator();
 
@@ -66,9 +67,9 @@ const Gerenciar = () => {
     setDataShow(data)
   }, 200);
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(selected)
-  }, [selected])
+  }, [selected]) */
 
   return (
     <SafeAreaView style={{ flex: 1, padding: 10 }}>
@@ -110,6 +111,14 @@ const Gerenciar = () => {
       />
       <Modal
         isVisible={selected ? true : false}
+        animationIn={'slideInLeft'}
+        animationOut={'slideOutRight'}
+        useNativeDriver
+      >
+        <Detalhes selected={selected} setSelected={setSelected}/>
+      </Modal>
+      {/* <Modal
+        isVisible={selected ? true : false}
         backdropColor={'rgba(1,1,1,0.2)'}
         backdropOpacity={1}
         animationIn={'zoomInDown'}
@@ -133,7 +142,7 @@ const Gerenciar = () => {
 
           </View>
         </View>
-      </Modal>
+      </Modal> */}
 
       {/* <TabelaNew
         title="Lista de leitores"

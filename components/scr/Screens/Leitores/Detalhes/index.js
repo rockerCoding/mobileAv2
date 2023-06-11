@@ -41,27 +41,29 @@ const Detalhes = ({ selected, setSelected }) => {
     setIsValid(validar());
   }, [nome, cpf, contato]);
 
-  const navigation = useNavigation()
-
   const handleGoBack = () => {
     setSelected(null)
-    navigation.goBack()
   }
 
   const handleEdit = () => {
-    console.log('editar?')
     setIsEditing(!isEditing)
   }
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => handleGoBack()}>
-        <Ionicons name="ios-caret-back" size={35} color="black" />
-      </Pressable>
+
       <View style={styles.topContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Detalhes</Text>
+          <Pressable onPress={() => handleGoBack()} style={styles.closeButton}>
+            <Ionicons name="close-outline" size={50} color="white" />
+          </Pressable>
+        </View>
         <TouchableOpacity >
           <Ionicons name="md-person-circle-outline" size={200} color="black" />
         </TouchableOpacity>
+
+
       </View>
       <View style={styles.middleContainer}>
         <TextInput
@@ -89,15 +91,36 @@ const Detalhes = ({ selected, setSelected }) => {
       </View>
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleEdit()}
-          >
-          <Text style={styles.text}>
-            Editar
-          </Text>
-        </TouchableOpacity>
-        
+        {
+          !isEditing ?
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleEdit()}
+            >
+              <Text style={styles.text}>
+                Editar
+              </Text>
+            </TouchableOpacity> :
+            <View style={styles.buttonsBottomContainer}>
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: 'red'}]}
+                onPress={() => handleEdit()}
+              >
+                <Text style={styles.text}>
+                  Cancelar
+                </Text>
+              </TouchableOpacity><TouchableOpacity
+                style={[styles.button, {backgroundColor: 'green'}]}
+                onPress={() => handleEdit()}
+              >
+                <Text style={styles.text}>
+                  Salvar
+                </Text>
+              </TouchableOpacity>
+            </View>
+        }
+
+
       </View>
     </View>
   );

@@ -12,7 +12,7 @@ const TesteTabela = ({ data, selected, setSelected, zebra, configColumns, config
 
   useEffect(() => {
     setIsReady(false)
-    data && initialConfig()
+    if(data /* && sizeOfView */) initialConfig()
   }, [data])
 
   const initialConfig = () => {
@@ -25,7 +25,7 @@ const TesteTabela = ({ data, selected, setSelected, zebra, configColumns, config
       initialNamesColumns.push(item["name"])
       let size = sizeOfView.width * (item["size"].split("%")[0] / 100)
       initialTotalColumns += size
-      initialSizesColumns.push(size)
+      initialSizesColumns.push(parseInt(size.toFixed()))
       initialTypesColumns.push(item["type"])
     })
 
@@ -76,6 +76,7 @@ const TesteTabela = ({ data, selected, setSelected, zebra, configColumns, config
   }
 
   const Header = () => {
+    console.log(sizesColumns)
     return (
       <View style={{ flexDirection: 'column' }}>
         <View style={{ flexDirection: 'row' }}>
@@ -122,6 +123,8 @@ const TesteTabela = ({ data, selected, setSelected, zebra, configColumns, config
                 ListHeaderComponent={<Header />}
                 stickyHeaderIndices={[0]}
                 style={{ flex: 1 }}
+                alwaysBounceVertical={false}
+                bounces={false}
               />
             </ScrollView>
 
