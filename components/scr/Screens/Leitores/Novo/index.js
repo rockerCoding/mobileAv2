@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react';
 import { Pressable, View, Text, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { styles } from './styles';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const Novo = () => {
+const Novo = ({data, setData}) => {
+
+  const navigation = useNavigation()
+
   const reset = () => {
     setNome('');
     setEndereco('');
@@ -24,7 +28,8 @@ const Novo = () => {
   };
 
   const handleSave = () => {
-    reset();
+    saveUser()
+    /* reset() */
   };
 
   useEffect(() => {
@@ -39,50 +44,78 @@ const Novo = () => {
     setIsValid(validar());
   }, [nome, cpf, endereco, contato]);
 
+  const handleGoBack = () => {
+    navigation.goBack()
+  }
+
+  const saveUser = () => {
+    let user = {
+      id: 30,
+      nome: nome,
+      cpf: cpf,
+      email: contato
+    }
+    setData(data => [...data, user])
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <TouchableOpacity >
-          <Ionicons name="md-person-circle-outline" size={200} color="black" />
-        </TouchableOpacity>
+      <View style={styles.headerContainer}>
+        <Pressable style={styles.leftHeaderContainer} onPress={() => handleGoBack()}>
+          <Ionicons name="chevron-back" size={40} color="black" />
+        </Pressable>
+        <View style={styles.middleHeaderContainer}>
+          <Text style={styles.titleText}>Novo usuário</Text>
+        </View>
+        <View style={styles.rightHeaderContainer}>
+          <Text>{data.length}</Text>
+        </View>
       </View>
-      <View style={styles.middleContainer}>
-        <TextInput
-          label="CPF"
-          value={cpf}
-          mode="outlined"
-          onChangeText={(text) => handleChangeText(text, setCPF)}
-          required={true}
-        />
-        <TextInput
-          label="Nome"
-          value={nome}
-          mode="outlined"
-          onChangeText={(text) => handleChangeText(text, setNome)}
-        />
-        <TextInput
-          label="Endereco"
-          value={endereco}
-          mode="outlined"
-          onChangeText={(endereco) => handleChangeText(endereco, setEndereco)}
-        />
-        <TextInput
-          label="Contato"
-          value={contato}
-          mode="outlined"
-          onChangeText={(text) => handleChangeText(text, setContato)}
-        />
-      </View>
+      <View style={styles.innerContainer}>
+        <View style={styles.topContainer}>
+          <TouchableOpacity >
+            <Ionicons name="md-person-circle-outline" size={200} color="black" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.middleContainer}>
+          <TextInput
+            label="CPF"
+            value={cpf}
+            mode="outlined"
+            onChangeText={(text) => handleChangeText(text, setCPF)}
+            required={true}
+          />
+          <TextInput
+            label="Nome"
+            value={nome}
+            mode="outlined"
+            onChangeText={(text) => handleChangeText(text, setNome)}
+          />
+          <TextInput
+            label="Endereco"
+            value={endereco}
+            mode="outlined"
+            onChangeText={(endereco) => handleChangeText(endereco, setEndereco)}
+          />
+          <TextInput
+            label="Contato"
+            value={contato}
+            mode="outlined"
+            onChangeText={(text) => handleChangeText(text, setContato)}
+          />
+        </View>
 
-      <View style={styles.bottomContainer}>
-        <TouchableOpacity
-          style={isValid ? styles.button : styles.buttonValid}
-          onPress={() => handleSave()}
-          disabled={!isValid}>
-          <Text style={styles.text}>
-            {isValid ? 'Gravar usuário' : 'Preencha o formulário'}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity
+            style={isValid ? styles.button : styles.buttonValid}
+            onPress={() => handleSave()}
+            disabled={!isValid}>
+            <Text style={styles.text}>
+              {isValid ? 'Gravar usuário' : 'Preencha o formulário'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     </View>
   );

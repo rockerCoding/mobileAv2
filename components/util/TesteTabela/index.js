@@ -13,6 +13,7 @@ const TesteTabela = ({ data, selected, selectable, setSelected, zebra, configCol
 
   useEffect(() => {
     setIsReady(false)
+    console.log('testando config iniicial')
     if (data) initialConfig()
   }, [data])
 

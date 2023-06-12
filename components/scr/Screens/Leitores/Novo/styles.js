@@ -3,7 +3,39 @@ import { StyleSheet, Text, View } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+  },
+
+  headerContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  leftHeaderContainer: {
+    flex: 2,
+    justifyContent: 'center', alignItems: 'center'
+  },
+  middleHeaderContainer: {
+    flex: 6,
+    justifyContent: 'center', alignItems: 'center'
+  },
+  rightHeaderContainer: {
+    flex: 2,
+    
+  },
+  titleText: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    color: 'white',
+    letterSpacing: 5,
+    textTransform: "uppercase",
+    fontWeight: '300',
+    fontSize: 20,
+    borderRadius: 5
+  },
+
+  innerContainer: {
+    flex: 8,
+    paddingHorizontal: 30,
   },
   topContainer: {
     justifyContent: 'center',

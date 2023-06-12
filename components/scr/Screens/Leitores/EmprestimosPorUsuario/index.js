@@ -20,22 +20,19 @@ const EmprestimosPorUsuario = ({ selected }) => {
   }, 100);
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={styles.container}>
+
       <View style={styles.headerContainer}>
         <Pressable style={styles.leftHeaderContainer} onPress={() => handleGoBack()}>
           <Ionicons name="chevron-back" size={40} color="black" />
         </Pressable>
         <View style={styles.middleHeaderContainer}>
-          <Text style={styles.titleText}>Detalhes</Text>
+          <Text style={styles.titleText}>Empréstimos</Text>
         </View>
-        <View style={styles.rightHeaderContainer}>
-          <Pressable style={styles.leftHeaderContainer} onPress={() => handleDetails()}>
-            <MaterialCommunityIcons name="account-details-outline" size={40} color="black" />
-          </Pressable>
-        </View>
+        <View style={styles.rightHeaderContainer} />
       </View>
 
-      <View style={{ flex: 1 }}>
+      <View style={styles.innerContainer}>
         <TesteTabela
           data={dataShow}
           configColumns={[
